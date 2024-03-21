@@ -122,3 +122,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea/
+
+vpn-2fa-auth.sh
