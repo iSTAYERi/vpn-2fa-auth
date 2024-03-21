@@ -7,7 +7,7 @@ import pexpect
 # get the passwords from password manager ('pass' in my case)
 def get_password(account):
     try:
-        # Запускаем команду pass и получаем пароль
+        # Execute 'pass' cli utility and get the password. This utility use GUI root password request.
         _password = subprocess.check_output(["pass", account]).decode().strip()
         return _password
     except subprocess.CalledProcessError as e:
@@ -76,7 +76,6 @@ secret = get_password("vpn_citrix_secret")  # get the secret key of your TOTP au
 root = get_password("root")  # get the sudo password
 totp = pyotp.TOTP(secret)
 vpn_name = "DOM RF"  # name of your VPN connection in network manager
-# Uncomment below if you use openconnect
 vpn_server_name = "vpn.domrfbank.ru"  # server name of your VPN.
 
 # connect_to_vpn_nm(login, password, root, totp, vpn_name)
