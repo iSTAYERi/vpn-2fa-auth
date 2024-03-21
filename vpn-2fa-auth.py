@@ -21,7 +21,7 @@ def connect_to_vpn_openconnect(username, password1, root_passwd, _totp, _vpn_ser
         # Uncomment for logs output. Warning: passwords output in open state
         # child.logfile = sys.stdout.buffer
 
-        child.expect_exact("[sudo] password for username: ")
+        child.expect_exact("[sudo] password for stayer: ")
         child.sendline(root_passwd)
 
         child.expect_exact("Username:")
@@ -34,7 +34,7 @@ def connect_to_vpn_openconnect(username, password1, root_passwd, _totp, _vpn_ser
         child.expect_exact("Password:")
         child.sendline(totp_code)
 
-        child.expect_exact("")
+        child.expect("200 OK")
         print("VNP connection successful")
         child.wait()
     except pexpect.exceptions.EOF:
@@ -49,7 +49,7 @@ def connect_to_vpn_nm(username, password1, root_passwd, _totp, _vpn_name):
         # Uncomment for logs output. Warning: passwords output in open state
         # child.logfile = sys.stdout.buffer
 
-        child.expect_exact("[sudo] password for username: ")
+        child.expect_exact("[sudo] password for stayer: ")
         child.sendline(root_passwd)
 
         child.expect_exact("Username:")
@@ -70,15 +70,15 @@ def connect_to_vpn_nm(username, password1, root_passwd, _totp, _vpn_name):
         print("Error: process timeout")
 
 
-login = "username"  # username for vpn connection
-password = get_password("vpn_pass")  # get the password for vpn connection
-secret = get_password("vpn_secret")  # get the secret key of your TOTP auth
-root = get_password("sudo")  # get the sudo password
+login = "sv.bogdanov"  # username for vpn connection
+password = get_password("vpn_citrix_pass")  # get the password for vpn connection
+secret = get_password("vpn_citrix_secret")  # get the secret key of your TOTP auth
+root = get_password("root")  # get the sudo password
 totp = pyotp.TOTP(secret)
-vpn_name = "SOME NAME"  # name of your VPN connection in network manager
+vpn_name = "DOM RF"  # name of your VPN connection in network manager
 # Uncomment below if you use openconnect
-# vpn_server_name = "some.server.com"  # server name of your VPN.
+vpn_server_name = "vpn.domrfbank.ru"  # server name of your VPN.
 
-connect_to_vpn_nm(login, password, root, totp, vpn_name)
+# connect_to_vpn_nm(login, password, root, totp, vpn_name)
 # Uncomment below if you use openconnect
-# connect_to_vpn_openconnect(login, password, root, totp, vpn_server_name)
+connect_to_vpn_openconnect(login, password, root, totp, vpn_server_name)
