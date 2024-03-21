@@ -7,7 +7,7 @@ import pexpect
 # get the passwords from password manager ('pass' in my case)
 def get_password(account):
     try:
-        # Запускаем команду pass и получаем пароль
+        # Execute 'pass' cli utility and get the password. This utility use GUI root password request.
         _password = subprocess.check_output(["pass", account]).decode().strip()
         return _password
     except subprocess.CalledProcessError as e:
@@ -34,7 +34,7 @@ def connect_to_vpn_openconnect(username, password1, root_passwd, _totp, _vpn_ser
         child.expect_exact("Password:")
         child.sendline(totp_code)
 
-        child.expect_exact("")
+        child.expect("200 OK")
         print("VNP connection successful")
         child.wait()
     except pexpect.exceptions.EOF:
@@ -76,8 +76,7 @@ secret = get_password("vpn_secret")  # get the secret key of your TOTP auth
 root = get_password("sudo")  # get the sudo password
 totp = pyotp.TOTP(secret)
 vpn_name = "SOME NAME"  # name of your VPN connection in network manager
-# Uncomment below if you use openconnect
-# vpn_server_name = "some.server.com"  # server name of your VPN.
+vpn_server_name = "some.server.com"  # server name of your VPN. Use for openconnect only
 
 connect_to_vpn_nm(login, password, root, totp, vpn_name)
 # Uncomment below if you use openconnect
