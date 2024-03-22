@@ -78,6 +78,6 @@ totp = pyotp.TOTP(secret)
 vpn_name = "DOM RF"  # name of your VPN connection in network manager
 vpn_server_name = "vpn.domrfbank.ru"  # server name of your VPN.
 
-# connect_to_vpn_nm(login, password, root, totp, vpn_name)
+connect_to_vpn_nm(login, password, root, totp, vpn_name)
 # Uncomment below if you use openconnect
-connect_to_vpn_openconnect(login, password, root, totp, vpn_server_name)
+# connect_to_vpn_openconnect(login, password, root, totp, vpn_server_name)
